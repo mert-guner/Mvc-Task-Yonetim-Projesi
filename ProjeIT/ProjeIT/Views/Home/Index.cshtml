@@ -1,0 +1,58 @@
+﻿@using ProjeIT.Models.Entity
+@model List<task>
+
+
+
+<a class="btn btn-success" style="float:right;" href="/Home/Ekle">Yeni Task Oluştur</a>
+<br />
+<br />
+<div class="col-12">
+    <div class="card">
+
+
+        <div class="card-body">
+
+            <h5 class="card-title">Görevler</h5>
+
+            <table id="tbl1" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Başlık</td>
+                        <td>İçerik</td>
+                        <td>Aciliyet Durumu</td>
+                        <td>Süresi</td>
+                        <td>Atanacak Kişi</td>
+                        @*<td>Güncelle</td>*@
+                        <td>Sil</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var urun in Model)
+                    {
+                        <tr>
+                            <td>@urun.id</td>
+                            <td>@urun.baslik</td>
+                            <td>@urun.icerik</td>
+                            <td>@urun.aciliyetDurum.aciliyet_durum</td>
+                            <td>@urun.bitirilme_sure</td>
+                            <td>@urun.Calisan1.Adi</td>
+                            @*<td>@urun.dokuman</td>*@
+
+
+                            @*<td><a class="btn btn-primary" href="/Home/Guncelle/@urun.id">Guncelle</a></td>*@
+
+                            <td><a class="btn btn-danger" href="/Home/Sil/@urun.id">Sil</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div><!-- End Reports -->

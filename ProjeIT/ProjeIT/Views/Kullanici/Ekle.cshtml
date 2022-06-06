@@ -1,0 +1,22 @@
+﻿@model ProjeIT.Models.Entity.task
+
+<h2>Proje Durumu</h2>
+<hr />
+
+@using (Html.BeginForm("Ekle", "Kullanici", FormMethod.Post))
+{
+    <form class="form-group">
+        <div>
+            <label>Proje Durumu</label>
+            @Html.TextBoxFor(m => m.durum, new { @class = "form-control" })
+        </div>
+
+        <div style="margin-top:20px;">
+            @Html.HiddenFor(m => m.id)
+            <button type="submit" class="btn btn-info text-white">Kaydet</button>
+            <a href="/Kullanici/Index" class="btn btn-danger">Vazgeç</a>
+        </div>
+    </form>
+}
+
+

@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjeIT_DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="aciliyetDurum">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="aciliyet_durum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="task" Relationship="Self.FK_task_aciliyetDurum" FromRole="aciliyetDurum" ToRole="task" />
+  </EntityType>
+  <EntityType Name="Calisan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="task" Relationship="Self.FK_task_Calisan" FromRole="Calisan" ToRole="task" />
+  </EntityType>
+  <EntityType Name="durum">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="durum1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="task">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="baslik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="aciliyet_durumu" Type="Int32" />
+    <Property Name="bitirilme_sure" Type="DateTime" Precision="0" />
+    <Property Name="dokuman" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="calisan" Type="Int32" />
+    <Property Name="durum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="yonetici" Type="Int32" />
+    <NavigationProperty Name="aciliyetDurum" Relationship="Self.FK_task_aciliyetDurum" FromRole="task" ToRole="aciliyetDurum" />
+    <NavigationProperty Name="Calisan1" Relationship="Self.FK_task_Calisan" FromRole="task" ToRole="Calisan" />
+    <NavigationProperty Name="Yonetici1" Relationship="Self.FK_task_Yonetici" FromRole="task" ToRole="Yonetici" />
+  </EntityType>
+  <EntityType Name="Yonetici">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="task" Relationship="Self.FK_task_Yonetici" FromRole="Yonetici" ToRole="task" />
+  </EntityType>
+  <Association Name="FK_task_aciliyetDurum">
+    <End Role="aciliyetDurum" Type="Self.aciliyetDurum" Multiplicity="0..1" />
+    <End Role="task" Type="Self.task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aciliyetDurum">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="task">
+        <PropertyRef Name="aciliyet_durumu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_task_Calisan">
+    <End Role="Calisan" Type="Self.Calisan" Multiplicity="0..1" />
+    <End Role="task" Type="Self.task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calisan">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="task">
+        <PropertyRef Name="calisan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_task_Yonetici">
+    <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="0..1" />
+    <End Role="task" Type="Self.task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yonetici">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="task">
+        <PropertyRef Name="yonetici" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProjeIT_DbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="aciliyetDurum" EntityType="Self.aciliyetDurum" />
+    <EntitySet Name="Calisan" EntityType="Self.Calisan" />
+    <EntitySet Name="durum" EntityType="Self.durum" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="task" EntityType="Self.task" />
+    <EntitySet Name="Yonetici" EntityType="Self.Yonetici" />
+    <AssociationSet Name="FK_task_aciliyetDurum" Association="Self.FK_task_aciliyetDurum">
+      <End Role="aciliyetDurum" EntitySet="aciliyetDurum" />
+      <End Role="task" EntitySet="task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_task_Calisan" Association="Self.FK_task_Calisan">
+      <End Role="Calisan" EntitySet="Calisan" />
+      <End Role="task" EntitySet="task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_task_Yonetici" Association="Self.FK_task_Yonetici">
+      <End Role="Yonetici" EntitySet="Yonetici" />
+      <End Role="task" EntitySet="task" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

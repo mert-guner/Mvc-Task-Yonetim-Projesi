@@ -1,0 +1,49 @@
+﻿@model ProjeIT.Models.Entity.task
+
+<h2>Task Oluştur</h2>
+<hr />
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("Ekle", "Home", FormMethod.Post))
+{
+    <form class="form-group">
+        <div>
+            <label>Başlık</label>
+            @Html.TextBoxFor(m => m.baslik, new { @class = "form-control" })
+        </div>
+
+        <div style="margin-top:20px;">
+            <label>Açıklama</label>
+            @Html.TextBoxFor(m => m.icerik, new { @class = "form-control" })
+        </div>
+
+        @*<div style="margin-top:20px;">
+                <label>Aciliyet Durumu</label>
+                @Html.TextBoxFor(m => m.aciliyet_durumu, new { @class = "form-control" })
+            </div>*@
+
+        <div style="margin-top:20px;">
+            <label>Aciliyet Durumu</label>
+            @Html.DropDownListFor(m => m.aciliyet_durumu, (List<SelectListItem>)ViewBag.dgr2, new { @class = "form-select" })
+        </div>
+
+
+        <div style="margin-top:20px;">
+            <label>Süresi</label>
+            @Html.TextBoxFor(m => m.bitirilme_sure, new { @class = "form-control" })
+        </div>
+
+        <div style="margin-top:20px;">
+            <label>Atanacak Kişi</label>
+            @Html.DropDownListFor(m => m.calisan, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-select" })
+        </div>
+
+        <div style="margin-top:20px;">
+            @Html.HiddenFor(m => m.id)
+            <button type="submit" class="btn btn-info text-white">Görevi Kaydet</button>
+            <a href="/Home/Index" class="btn btn-danger">Vazgeç</a>
+        </div>
+    </form>
+}

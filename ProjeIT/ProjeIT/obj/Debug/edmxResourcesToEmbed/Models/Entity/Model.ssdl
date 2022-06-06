@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjeIT_DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="aciliyetDurum">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="aciliyet_durum" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Calisan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kullanici_adi" Type="nvarchar" MaxLength="50" />
+    <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+    <Property Name="Soyadi" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="durum">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="durum" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="task">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="baslik" Type="nvarchar(max)" />
+    <Property Name="icerik" Type="nvarchar(max)" />
+    <Property Name="aciliyet_durumu" Type="int" />
+    <Property Name="bitirilme_sure" Type="date" />
+    <Property Name="dokuman" Type="varbinary(max)" />
+    <Property Name="calisan" Type="int" />
+    <Property Name="durum" Type="nvarchar" MaxLength="50" />
+    <Property Name="yonetici" Type="int" />
+  </EntityType>
+  <EntityType Name="Yonetici">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kullanici_adi" Type="nvarchar" MaxLength="50" />
+    <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+    <Property Name="Soyadi" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_task_aciliyetDurum">
+    <End Role="aciliyetDurum" Type="Self.aciliyetDurum" Multiplicity="0..1" />
+    <End Role="task" Type="Self.task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aciliyetDurum">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="task">
+        <PropertyRef Name="aciliyet_durumu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_task_Calisan">
+    <End Role="Calisan" Type="Self.Calisan" Multiplicity="0..1" />
+    <End Role="task" Type="Self.task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calisan">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="task">
+        <PropertyRef Name="calisan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_task_Yonetici">
+    <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="0..1" />
+    <End Role="task" Type="Self.task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yonetici">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="task">
+        <PropertyRef Name="yonetici" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProjeIT_DbModelStoreContainer">
+    <EntitySet Name="aciliyetDurum" EntityType="Self.aciliyetDurum" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Calisan" EntityType="Self.Calisan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="durum" EntityType="Self.durum" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="task" EntityType="Self.task" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yonetici" EntityType="Self.Yonetici" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_task_aciliyetDurum" Association="Self.FK_task_aciliyetDurum">
+      <End Role="aciliyetDurum" EntitySet="aciliyetDurum" />
+      <End Role="task" EntitySet="task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_task_Calisan" Association="Self.FK_task_Calisan">
+      <End Role="Calisan" EntitySet="Calisan" />
+      <End Role="task" EntitySet="task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_task_Yonetici" Association="Self.FK_task_Yonetici">
+      <End Role="Yonetici" EntitySet="Yonetici" />
+      <End Role="task" EntitySet="task" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

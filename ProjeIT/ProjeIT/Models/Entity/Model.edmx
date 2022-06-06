@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProjeIT_DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="aciliyetDurum">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aciliyet_durum" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Calisan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kullanici_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyadi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="durum">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="durum" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="baslik" Type="nvarchar(max)" />
+          <Property Name="icerik" Type="nvarchar(max)" />
+          <Property Name="aciliyet_durumu" Type="int" />
+          <Property Name="bitirilme_sure" Type="date" />
+          <Property Name="dokuman" Type="varbinary(max)" />
+          <Property Name="calisan" Type="int" />
+          <Property Name="durum" Type="nvarchar" MaxLength="50" />
+          <Property Name="yonetici" Type="int" />
+        </EntityType>
+        <EntityType Name="Yonetici">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kullanici_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyadi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_task_aciliyetDurum">
+          <End Role="aciliyetDurum" Type="Self.aciliyetDurum" Multiplicity="0..1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aciliyetDurum">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="aciliyet_durumu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_Calisan">
+          <End Role="Calisan" Type="Self.Calisan" Multiplicity="0..1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Calisan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="calisan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_Yonetici">
+          <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="0..1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yonetici">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="yonetici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjeIT_DbModelStoreContainer">
+          <EntitySet Name="aciliyetDurum" EntityType="Self.aciliyetDurum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calisan" EntityType="Self.Calisan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="durum" EntityType="Self.durum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="task" EntityType="Self.task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yonetici" EntityType="Self.Yonetici" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_task_aciliyetDurum" Association="Self.FK_task_aciliyetDurum">
+            <End Role="aciliyetDurum" EntitySet="aciliyetDurum" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_Calisan" Association="Self.FK_task_Calisan">
+            <End Role="Calisan" EntitySet="Calisan" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_Yonetici" Association="Self.FK_task_Yonetici">
+            <End Role="Yonetici" EntitySet="Yonetici" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjeIT_DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="aciliyetDurum">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aciliyet_durum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="task" Relationship="Self.FK_task_aciliyetDurum" FromRole="aciliyetDurum" ToRole="task" />
+        </EntityType>
+        <EntityType Name="Calisan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="task" Relationship="Self.FK_task_Calisan" FromRole="Calisan" ToRole="task" />
+        </EntityType>
+        <EntityType Name="durum">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="durum1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="baslik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="aciliyet_durumu" Type="Int32" />
+          <Property Name="bitirilme_sure" Type="DateTime" Precision="0" />
+          <Property Name="dokuman" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="calisan" Type="Int32" />
+          <Property Name="durum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="yonetici" Type="Int32" />
+          <NavigationProperty Name="aciliyetDurum" Relationship="Self.FK_task_aciliyetDurum" FromRole="task" ToRole="aciliyetDurum" />
+          <NavigationProperty Name="Calisan1" Relationship="Self.FK_task_Calisan" FromRole="task" ToRole="Calisan" />
+          <NavigationProperty Name="Yonetici1" Relationship="Self.FK_task_Yonetici" FromRole="task" ToRole="Yonetici" />
+        </EntityType>
+        <EntityType Name="Yonetici">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="task" Relationship="Self.FK_task_Yonetici" FromRole="Yonetici" ToRole="task" />
+        </EntityType>
+        <Association Name="FK_task_aciliyetDurum">
+          <End Role="aciliyetDurum" Type="Self.aciliyetDurum" Multiplicity="0..1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aciliyetDurum">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="aciliyet_durumu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_Calisan">
+          <End Role="Calisan" Type="Self.Calisan" Multiplicity="0..1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Calisan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="calisan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_Yonetici">
+          <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="0..1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yonetici">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="yonetici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjeIT_DbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="aciliyetDurum" EntityType="Self.aciliyetDurum" />
+          <EntitySet Name="Calisan" EntityType="Self.Calisan" />
+          <EntitySet Name="durum" EntityType="Self.durum" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="task" EntityType="Self.task" />
+          <EntitySet Name="Yonetici" EntityType="Self.Yonetici" />
+          <AssociationSet Name="FK_task_aciliyetDurum" Association="Self.FK_task_aciliyetDurum">
+            <End Role="aciliyetDurum" EntitySet="aciliyetDurum" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_Calisan" Association="Self.FK_task_Calisan">
+            <End Role="Calisan" EntitySet="Calisan" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_Yonetici" Association="Self.FK_task_Yonetici">
+            <End Role="Yonetici" EntitySet="Yonetici" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjeIT_DbModelStoreContainer" CdmEntityContainer="ProjeIT_DbEntities">
+          <EntitySetMapping Name="aciliyetDurum">
+            <EntityTypeMapping TypeName="ProjeIT_DbModel.aciliyetDurum">
+              <MappingFragment StoreEntitySet="aciliyetDurum">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="aciliyet_durum" ColumnName="aciliyet_durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calisan">
+            <EntityTypeMapping TypeName="ProjeIT_DbModel.Calisan">
+              <MappingFragment StoreEntitySet="Calisan">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="kullanici_adi" ColumnName="kullanici_adi" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="durum">
+            <EntityTypeMapping TypeName="ProjeIT_DbModel.durum">
+              <MappingFragment StoreEntitySet="durum">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="durum1" ColumnName="durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProjeIT_DbModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="task">
+            <EntityTypeMapping TypeName="ProjeIT_DbModel.task">
+              <MappingFragment StoreEntitySet="task">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="baslik" ColumnName="baslik" />
+                <ScalarProperty Name="icerik" ColumnName="icerik" />
+                <ScalarProperty Name="aciliyet_durumu" ColumnName="aciliyet_durumu" />
+                <ScalarProperty Name="bitirilme_sure" ColumnName="bitirilme_sure" />
+                <ScalarProperty Name="dokuman" ColumnName="dokuman" />
+                <ScalarProperty Name="calisan" ColumnName="calisan" />
+                <ScalarProperty Name="durum" ColumnName="durum" />
+                <ScalarProperty Name="yonetici" ColumnName="yonetici" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yonetici">
+            <EntityTypeMapping TypeName="ProjeIT_DbModel.Yonetici">
+              <MappingFragment StoreEntitySet="Yonetici">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="kullanici_adi" ColumnName="kullanici_adi" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
